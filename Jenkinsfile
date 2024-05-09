@@ -14,7 +14,7 @@ pipeline {
             post {
                 success {
                     emailext (
-                        to: 'your_email@example.com', // Specify the recipient email address
+                        to: 'shajeemano@gmail.com', // Specify the recipient email address
                         subject: 'Unit and Integration Tests Success',
                         body: 'Unit and Integration tests have passed successfully.',
                         attachLog: true
@@ -22,7 +22,7 @@ pipeline {
                 }
                 failure {
                     emailext (
-                        to: 'your_email@example.com', // Specify the recipient email address
+                        to: 'shajeemano@gmail.com', // Specify the recipient email address
                         subject: 'Unit and Integration Tests Failed',
                         body: 'Unit and Integration tests have failed. Please check the logs for details.',
                         attachLog: true
@@ -42,7 +42,7 @@ pipeline {
             post {
                 success {
                     emailext (
-                        to: 'your_email@example.com', // Specify the recipient email address
+                        to: 'shajeemano@gmail.com', // Specify the recipient email address
                         subject: 'Security Scan Success',
                         body: 'Security scan has passed successfully.',
                         attachLog: true
@@ -50,7 +50,7 @@ pipeline {
                 }
                 failure {
                     emailext (
-                        to: 'your_email@example.com', // Specify the recipient email address
+                        to: 'shajeemano@gmail.com', // Specify the recipient email address
                         subject: 'Security Scan Failed',
                         body: 'Security scan has failed. Please check the logs for details.',
                         attachLog: true
