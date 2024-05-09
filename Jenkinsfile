@@ -1,57 +1,52 @@
 pipeline {
     agent any
-
-    environment {
-        DIRECTORY_PATH = 'C:\\ProgramData\\Jenkins\\.jenkins\\jobs\\New Jenkins pipeline ver2\\builds\\1'  
-        TESTING_ENVIRONMENT = "testing environment"
-        PRODUCTION_ENVIRONMENT = "shajeeran's production env"  
-    }
-
     stages {
         stage('Build') {
             steps {
-                script {
-                    echo 'Fetching source code from the directory path specified by the environment variable.'
-                    echo 'Compiling the code and generating any necessary artifacts.'
-                }
+                echo "Performing build using Maven"
             }
         }
-        stage('Test') {
+        stage('Unit and Integration Tests') {
             steps {
-                script {
-                    echo 'Running unit tests...'
-                    echo 'Running integration tests...'
-                }
+                echo "Running unit tests using JUnit"
+                echo "Running integration tests using TestNG"
             }
         }
-        stage('Code Quality Check') {
+        stage('Code Analysis') {
             steps {
-                script {
-                    echo 'Checking the quality of the code.'
-                }
+                echo "Performing code analysis using SonarQube"
             }
         }
-        stage('Deploy') {
+        stage('Security Scan') {
             steps {
-                script {
-                    echo "Deploying the application to ${TESTING_ENVIRONMENT} specified by the environment variable."
-                }
+                echo "Performing security scan using OWASP ZAP"
             }
         }
-        stage('Approval') {
+        stage('Deploy to Staging') {
             steps {
-                script {
-                    echo 'Waiting for manual approval...'
-                    sleep 10
-                }
+                echo "Deploying to staging using AWS EC2"
+            }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                echo "Running integration tests on staging using Selenium"
             }
         }
         stage('Deploy to Production') {
             steps {
-                script {
-                    echo "Deploying the code to ${PRODUCTION_ENVIRONMENT} environment."
-                }
+                echo "Deploying to production using AWS EC2"
             }
+        }
+    }
+    post {
+        always {
+            echo "Sending email notifications"
+            emailext (
+                to: 'shajeemano88@gmail.com',
+                subject: 'Pipeline status: ${currentBuild.currentResult}',
+                body: "Pipeline status: ${currentBuild.currentResult}\n\nLogs:\n${currentBuild.rawBuild.log}",
+                attachLog: true
+            )
         }
     }
 }
