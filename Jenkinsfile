@@ -41,12 +41,12 @@ pipeline {
     post {
         always {
             echo "Sending email notifications"
-            emailext (
-                to: 'shajeemano88@gmail.com',
-                subject: 'Pipeline status: ${currentBuild.currentResult}',
-                body: "Pipeline status: ${currentBuild.currentResult}\n\nLogs:\n${currentBuild.rawBuild.log}",
-                attachLog: true
-            )
+                emailext (
+                    to: 'shajeemano88@gmail.com',
+                    subject: 'Pipeline Notification',
+                    body: "Pipeline status: ${currentBuild.currentResult}\n\nLogs:\n${currentBuild.rawBuild.log}",
+                    attachLog: true
+                )
         }
     }
 }
