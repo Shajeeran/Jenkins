@@ -77,6 +77,16 @@ pipeline {
             steps {
                 echo 'run integration tests on the staging environment to ensure the application functions as expected in a production-like environment. '
             }
+            post {
+                always {
+                    emailext(
+                        subject: 'Integration Tests on Staging - Complete!',
+                        body: 'Integration tests on Staging environment completed!',
+                        to: "${params.emailRecipient}",
+                        attachLog: "${params.attachLog}"
+                    )
+                }
+            }
         }
         stage('Deploy to Production') {
             steps {
