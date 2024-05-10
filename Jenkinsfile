@@ -1,8 +1,15 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'emailRecipient', defaultValue: 'shajeemano88@gmail.com', description: 'Email address to receive notifications')
+        booleanParam(name: 'attachLog', defaultValue: true, description: 'Attach build log to email')
+    }
+
     triggers {
-        pollSCM('H/5 * * * *')
+        pollSCM(
+            'H/5 * * * *'
+        )
     }
 
     stages {
@@ -21,23 +28,16 @@ pipeline {
                     emailext(
                         subject: 'Unit & Integration Tests - Success!',
                         body: 'Unit and Integration Tests passed successfully!',
-                        to: 'shajeemano88@gmail.com',
-                        attachLog: true
+                        to: "${params.emailRecipient}",
+                        attachLog: "${params.attachLog}"
                     )
-                    // Placeholder for triggering edible notification
-                    script {
-                        echo 'Triggering edible notification...'
-                        // Call a script or external service to trigger edible notification
-                        // Example:
-                        // sh 'python send_edible_notification.py'
-                    }
                 }
                 failure {
                     emailext(
                         subject: 'Unit & Integration Tests - Failed!',
                         body: 'Unit and Integration Tests failed! Check the logs for details.',
-                        to: 'shajeemano88@gmail.com',
-                        attachLog: true
+                        to: "${params.emailRecipient}",
+                        attachLog: "${params.attachLog}"
                     )
                 }
             }
@@ -51,16 +51,16 @@ pipeline {
                     emailext(
                         subject: 'Code Analysis - Success!',
                         body: 'Code analysis completed successfully!',
-                        to: 'shajeemano88@gmail.com',
-                        attachLog: true
+                        to: "${params.emailRecipient}",
+                        attachLog: "${params.attachLog}"
                     )
                 }
                 failure {
                     emailext(
                         subject: 'Code Analysis - Issues Found!',
-                        body: 'Code analysis detected potential issues. Review the logs for details.',
-                        to: 'shajeemano88@gmail.com',
-                        attachLog: true
+                        body: 'Code analysis detected potential issues. Review the logs!',
+                        to: "${params.emailRecipient}",
+                        attachLog: "${params.attachLog}"
                     )
                 }
             }
@@ -74,15 +74,16 @@ pipeline {
                     emailext(
                         subject: 'Security Scan - No Vulnerabilities Found!',
                         body: 'Security scan completed successfully - No vulnerabilities detected!',
-                        to: 'shajeemano88@gmail.com'
+                        to: "${params.emailRecipient}",
+                        attachLog: "${params.attachLog}"
                     )
                 }
                 failure {
                     emailext(
                         subject: 'Security Scan - Vulnerabilities Found!',
                         body: 'Security scan detected vulnerabilities! Address them before deployment.',
-                        to: 'shajeemano88@gmail.com',
-                        attachLog: true
+                        to: "${params.emailRecipient}",
+                        attachLog: "${params.attachLog}"
                     )
                 }
             }
