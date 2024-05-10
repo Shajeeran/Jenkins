@@ -44,24 +44,6 @@ pipeline {
             steps {
                 echo ' integrate a code analysis tool to analyse the code and ensure it meets industry standards. Research and select a tool to analyse your code using Jenkins. '
             }
-            post {
-                success {
-                    emailext(
-                        subject: 'Code Analysis - Success!',
-                        body: 'Code analysis completed successfully!',
-                        to: "${params.emailRecipient}",
-                        attachLog: "${params.attachLog}"
-                    )
-                }
-                failure {
-                    emailext(
-                        subject: 'Code Analysis - Issues Found!',
-                        body: 'Code analysis detected potential issues. Review the logs!',
-                        to: "${params.emailRecipient}",
-                        attachLog: "${params.attachLog}"
-                    )
-                }
-            }
         }
         stage('Security Scan') {
             steps {
@@ -90,45 +72,15 @@ pipeline {
             steps {
                 echo ' deploy the application to a staging server (e.g., AWS EC2 instance). '
             }
-            post {
-                always {
-                    emailext(
-                        subject: 'Deployment to Staging - Complete!',
-                        body: 'Application deployed to Staging server successfully!',
-                        to: "${params.emailRecipient}",
-                        attachLog: "${params.attachLog}"
-                    )
-                }
-            }
         }
         stage('Integration Tests on Staging') {
             steps {
                 echo 'run integration tests on the staging environment to ensure the application functions as expected in a production-like environment. '
             }
-            post {
-                always {
-                    emailext(
-                        subject: 'Integration Tests on Staging - Complete!',
-                        body: 'Integration tests on Staging environment completed!',
-                        to: "${params.emailRecipient}",
-                        attachLog: "${params.attachLog}"
-                    )
-                }
-            }
         }
         stage('Deploy to Production') {
             steps {
                 echo 'deploy the application to a production server (e.g., AWS EC2 instance).'
-            }
-            post {
-                always {
-                    emailext(
-                        subject: 'Deployment to Production - Complete!',
-                        body: 'Application deployed to Production server successfully!',
-                        to: "${params.emailRecipient}",
-                        attachLog: "${params.attachLog}"
-                    )
-                }
             }
         }
     }
