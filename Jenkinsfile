@@ -13,13 +13,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building code using Maven...'
+                echo 'Build the code using a build automation tool to compile and package your code. You need to specify at least one build automation tool e.g., Maven.  '
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit tests with JUnit...'
-                echo 'Running integration tests with Selenium...'
+                echo 'run unit tests to ensure the code functions as expected and run integration tests to ensure the different components of the application work together as expected. You need to specify test automation tools for this stage.'
+
             }
             post {
                 success {
@@ -42,7 +42,7 @@ pipeline {
         }
         stage('Code Analysis') {
             steps {
-                echo 'Analyzing code with SonarQube...'
+                echo ' integrate a code analysis tool to analyse the code and ensure it meets industry standards. Research and select a tool to analyse your code using Jenkins. '
             }
             post {
                 success {
@@ -65,7 +65,7 @@ pipeline {
         }
         stage('Security Scan') {
             steps {
-                echo 'Scanning code for vulnerabilities with SAST tool...'
+                echo 'perform a security scan on the code using a tool to identify any vulnerabilities. Research and select a tool to scan your code. '
             }
             post {
                 success {
@@ -88,7 +88,7 @@ pipeline {
         }
         stage('Deploy to Staging') {
             steps {
-                echo 'Deploying application to Staging server (e.g., AWS EC2)...'
+                echo ' deploy the application to a staging server (e.g., AWS EC2 instance). '
             }
             post {
                 always {
@@ -103,7 +103,7 @@ pipeline {
         }
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Running integration tests on Staging environment...'
+                echo 'run integration tests on the staging environment to ensure the application functions as expected in a production-like environment. '
             }
             post {
                 always {
@@ -118,7 +118,7 @@ pipeline {
         }
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying application to Production server...'
+                echo 'deploy the application to a production server (e.g., AWS EC2 instance).'
             }
             post {
                 always {
