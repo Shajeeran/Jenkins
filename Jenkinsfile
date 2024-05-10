@@ -1,64 +1,70 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Build') {
             steps {
-                // Compile and package code using Maven
+                // Build code using Maven
                 sh 'mvn clean package'
             }
         }
+
         stage('Unit and Integration Tests') {
             steps {
-                // Run unit tests
+                // Run unit tests using JUnit
                 sh 'mvn test'
-                // Run integration tests
-                sh 'mvn integration-test'
+                
+                // Run integration tests using a framework like Selenium
+                sh 'selenium-runner'
             }
         }
+
         stage('Code Analysis') {
             steps {
-                // Analyze code using SonarQube
-                sh 'sonar-scanner'
+                // Integrate a code analysis tool like SonarQube
+                withSonarQubeEnv('SonarQube') {
+                    sh 'sonar-scanner'
+                }
             }
         }
+
         stage('Security Scan') {
             steps {
-                // Perform security scan using OWASP Dependency-Check
-                sh 'dependency-check --project <project-name> --scan <project-directory>'
+                // Perform security scan using a tool like OWASP ZAP
+                sh 'owasp-zap -cmd'
             }
         }
+
         stage('Deploy to Staging') {
             steps {
-                // Deploy application to staging server (AWS EC2)
-                sh 'aws ec2 deploy <staging-server>'
+                // Deploy application to staging server, e.g., AWS EC2
+                sh 'aws deploy staging'
             }
         }
+
         stage('Integration Tests on Staging') {
             steps {
                 // Run integration tests on staging environment
-                sh 'mvn integration-test'
+                sh 'selenium-runner-staging'
             }
         }
+
         stage('Deploy to Production') {
             steps {
-                // Deploy application to production server (AWS EC2)
-                sh 'aws ec2 deploy <production-server>'
+                // Deploy application to production server, e.g., AWS EC2
+                sh 'aws deploy production'
             }
         }
     }
-    
+
     post {
-        // Send notification email with status and logs for test and security scan stages
         success {
-            emailext subject: "Pipeline Success",
-                      body: "Pipeline ran successfully.",
-                      to: "your-email@example.com"
+            // Send notification email on successful completion
+             emailext body: "Pipeline succeeded", subject: "Pipeline Success", to: "shajeemano88@gmail.com"
         }
         failure {
-            emailext subject: "Pipeline Failure",
-                      body: "Pipeline failed. Check logs for details.",
-                      to: "your-email@example.com"
+            // Send notification email on failure with logs attached
+            emailext body: "Pipeline failed", subject: "Pipeline Failure", to: "shajeemano88@gmail.com", attachLog: true
         }
     }
 }
