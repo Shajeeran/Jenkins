@@ -23,7 +23,7 @@ pipeline {
                     emailext( // Assuming Email-Ext Plugin is used
                         subject: 'Unit & Integration Tests - Success!',
                         body: 'Unit and Integration Tests passed successfully!',
-                        recipient: 'youremail@example.com',
+                        recipient: 'shajeemano88@gmail.com',
                         attachLog: true
                     )
                 }
@@ -31,7 +31,7 @@ pipeline {
                     emailext( // Assuming Email-Ext Plugin is used
                         subject: 'Unit & Integration Tests - Failed!',
                         body: 'Unit and Integration Tests failed! Check the logs for details.',
-                        recipient: 'youremail@example.com',
+                        recipient: 'shajeemano88@gmail.com',
                         attachLog: true
                     )
                 }
@@ -46,7 +46,7 @@ pipeline {
                     emailext( // Assuming Email-Ext Plugin is used
                         subject: 'Code Analysis - Success!',
                         body: 'Code analysis completed successfully!',
-                        recipient: 'youremail@example.com',
+                        recipient: 'shajeemano88@gmail.com',
                         attachLog: true
                     )
                 }
@@ -54,7 +54,7 @@ pipeline {
                     emailext( // Assuming Email-Ext Plugin is used
                         subject: 'Code Analysis - Issues Found!',
                         body: 'Code analysis detected potential issues. Review the logs!',
-                        recipient: 'youremail@example.com',
+                        recipient: 'shajeemano88@gmail.com',
                     )
                 }
             }
@@ -68,14 +68,14 @@ pipeline {
                     emailext( // Assuming Email-Ext Plugin is used
                         subject: 'Security Scan - No Vulnerabilities Found!',
                         body: 'Security scan completed successfully - No vulnerabilities detected!',
-                        recipient: 'youremail@example.com',
+                        recipient: 'shajeemano88@gmail.com',
                     )
                 }
                 failure {
                     emailext( // Assuming Email-Ext Plugin is used
                         subject: 'Security Scan - Vulnerabilities Found!',
                         body: 'Security scan detected vulnerabilities! Address them before deployment.',
-                        recipient: 'youremail@example.com',
+                        recipient: 'shajeemano88@gmail.com',
                         attachLog: true
                     )
                 }
