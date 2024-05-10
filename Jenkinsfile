@@ -150,10 +150,10 @@ pipeline {
           echo 'Running integration tests on Staging environment...'  // Adapt the testing tool for the environment
         }
       }
-      stage('Deploy to Production') {
-        steps {
-          echo 'Deploying application to Production server...' // Added closing quotation mark here
-        }
+    stage('Deploy to Production') {
+      steps {
+        echo 'Deploying application to Production server...' // Added closing quotation mark here
       }
     }
   }
+}
