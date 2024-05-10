@@ -7,9 +7,7 @@ pipeline {
     }
 
     triggers {
-        pollSCM(
-            'H/5 * * * *'
-        )
+        pollSCM('H/5 * * * *')
     }
 
     stages {
@@ -92,15 +90,45 @@ pipeline {
             steps {
                 echo 'Deploying application to Staging server (e.g., AWS EC2)...'
             }
+            post {
+                always {
+                    emailext(
+                        subject: 'Deployment to Staging - Complete!',
+                        body: 'Application deployed to Staging server successfully!',
+                        to: "${params.emailRecipient}",
+                        attachLog: "${params.attachLog}"
+                    )
+                }
+            }
         }
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running integration tests on Staging environment...'
             }
+            post {
+                always {
+                    emailext(
+                        subject: 'Integration Tests on Staging - Complete!',
+                        body: 'Integration tests on Staging environment completed!',
+                        to: "${params.emailRecipient}",
+                        attachLog: "${params.attachLog}"
+                    )
+                }
+            }
         }
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying application to Production server...'
+            }
+            post {
+                always {
+                    emailext(
+                        subject: 'Deployment to Production - Complete!',
+                        body: 'Application deployed to Production server successfully!',
+                        to: "${params.emailRecipient}",
+                        attachLog: "${params.attachLog}"
+                    )
+                }
             }
         }
     }
