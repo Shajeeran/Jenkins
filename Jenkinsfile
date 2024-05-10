@@ -2,9 +2,7 @@ pipeline {
     agent any
 
     triggers {
-        pollSCM(
-            'H/5 * * * *'
-        )
+        pollSCM('H/5 * * * *')
     }
 
     stages {
@@ -26,6 +24,13 @@ pipeline {
                         to: 'shajeemano88@gmail.com',
                         attachLog: true
                     )
+                    // Placeholder for triggering edible notification
+                    script {
+                        echo 'Triggering edible notification...'
+                        // Call a script or external service to trigger edible notification
+                        // Example:
+                        // sh 'python send_edible_notification.py'
+                    }
                 }
                 failure {
                     emailext(
@@ -53,7 +58,7 @@ pipeline {
                 failure {
                     emailext(
                         subject: 'Code Analysis - Issues Found!',
-                        body: 'Code analysis detected potential issues. Review the logs!',
+                        body: 'Code analysis detected potential issues. Review the logs for details.',
                         to: 'shajeemano88@gmail.com',
                         attachLog: true
                     )
