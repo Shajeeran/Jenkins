@@ -20,7 +20,7 @@ pipeline {
       }
       post { // Configure post-actions for this stage
         success {
-          emailaction( // Send email on success
+          emailext( // Use the correct step name from the Email-Ext Plugin
             subject: 'Unit & Integration Tests - Success!',
             body: 'Unit and Integration Tests passed successfully!',
             recipient: 'youremail@example.com',
@@ -28,7 +28,7 @@ pipeline {
           )
         }
         failure {
-          emailaction( // Send email on failure
+          emailext( // Use the correct step name from the Email-Ext Plugin
             subject: 'Unit & Integration Tests - Failed!',
             body: 'Unit and Integration Tests failed! Check the logs for details.',
             recipient: 'youremail@example.com',
