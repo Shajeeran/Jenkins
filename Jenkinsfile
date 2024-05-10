@@ -3,61 +3,48 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Performing build using Maven"
+                sh 'mvn clean package'
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                echo "Running unit tests using JUnit"
-                echo "Running integration tests using TestNG"
-            }
-            post {
-                success {
-                    emailext (
-                        to: 'shajeemano@gmail.com', // Specify the recipient email address
-                        subject: 'Unit and Integration Tests Success',
-                        body: 'Unit and Integration tests have passed successfully.',
-                        attachLog: true
-                    )
-                }
-                failure {
-                    emailext (
-                        to: 'shajeemano@gmail.com', // Specify the recipient email address
-                        subject: 'Unit and Integration Tests Failed',
-                        body: 'Unit and Integration tests have failed. Please check the logs for details.',
-                        attachLog: true
-                    )
-                }
+                sh 'mvn test'
             }
         }
         stage('Code Analysis') {
             steps {
-                echo "Performing code analysis using SonarQube"
+                // Run a code analysis tool e.g., SonarQube
             }
         }
         stage('Security Scan') {
             steps {
-                echo "Performing security scan using OWASP ZAP"
-            }
-            post {
-                success {
-                    emailext (
-                        to: 'shajeemano@gmail.com', // Specify the recipient email address
-                        subject: 'Security Scan Success',
-                        body: 'Security scan has passed successfully.',
-                        attachLog: true
-                    )
-                }
-                failure {
-                    emailext (
-                        to: 'shajeemano@gmail.com', // Specify the recipient email address
-                        subject: 'Security Scan Failed',
-                        body: 'Security scan has failed. Please check the logs for details.',
-                        attachLog: true
-                    )
-                }
+                // Run a security scanning tool e.g., SonarQube
             }
         }
-        // Define other stages as per your requirements
+        stage('Deploy to Staging') {
+            steps {
+                // Deploy to staging server
+            }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                // Run integration tests on staging environment
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                // Deploy to production server
+            }
+        }
+    }
+    post {
+        always {
+            // Send notification emails at the end of each stage
+            emailext body: 'The ${STAGE_NAME} stage completed with status: ${currentBuild.currentResult}', subject: 'Pipeline Notification: ${STAGE_NAME}', to: 'shajeemano88@mail.com'
+        }
+        failure {
+            // Send notification emails on failure
+            emailext body: 'The ${STAGE_NAME} stage failed with status: ${currentBuild.currentResult}', subject: 'Pipeline Notification: ${STAGE_NAME}', to: 'shajeemano88@gmail.com'
+        }
     }
 }
