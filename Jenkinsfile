@@ -25,7 +25,7 @@ pipeline {
                 success {
                     emailext(
                         subject: 'Unit & Integration Tests - Success!',
-                        body: 'Unit and Integration Tests passed successfully in latest version!!',
+                        body: 'New Unit and Integration Tests passed successfully in latest version!!',
                         to: "${params.emailRecipient}",
                         attachLog: "${params.attachLog}"
                     )
